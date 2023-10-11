@@ -1,6 +1,9 @@
 import './App.scss';
 import Nav from './components/Navigation/nav';
 import Login from './components/Login/Login';
+import Register from './components/Register/Register';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import React from "react";
 import {
@@ -28,6 +31,9 @@ function App() {
           <Route path="/login" exact>
             <Login />
           </Route>
+          <Route path="/register" exact>
+            <Register />
+          </Route>
           <Route path="/" exact>
             Home
           </Route>
@@ -36,6 +42,18 @@ function App() {
           </Route>
         </Switch>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Router>
 
   );
