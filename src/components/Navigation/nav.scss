@@ -33,6 +33,7 @@ body {
                 font-weight: 700;
                 cursor: pointer;
                 color: #fff;
+                margin-right: 5px;
             }
 
             .search {
@@ -75,6 +76,7 @@ body {
                 min-width: 150px;
                 justify-content: center;
                 cursor: pointer;
+                margin-left: 10px;
 
                 .shopping-icon {
                     font-size: 20px;
@@ -133,9 +135,10 @@ body {
         }
 
         .icon-nav {
-            position: fixed;
-            right: 0;
+            position: relative;
             margin: 5px;
+            right: 0;
+            top: 50px;
         }
 
         .topnav-content2 {
@@ -148,11 +151,13 @@ body {
 
             @media screen and (max-width: 991px) {
                 .show-content-nav-mb {
-                    background-color: #000;
+                    background-color: #187733;
                     position: absolute;
                     width: 250px;
-                    right: 0;
-                    top: 151px;
+                    top: 195px;
+                    box-shadow: 0 2px 4px rgb(0 0 0/ 10%), 0 8px 16px rgb(0 0 0 / 10%);
+                    left: 0;
+
                 }
             }
 
@@ -173,6 +178,10 @@ body {
             a.active {
                 background-color: #333;
                 color: white;
+            }
+
+            .search-mb {
+                margin-left: 100px;
             }
         }
     }

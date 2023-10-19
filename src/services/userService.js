@@ -1,18 +1,46 @@
-import axios from "axios";
+import axios from "../setup/axios";
 
 const registerNewuser = (username, password, phone, email, address) => {
-    return axios.post('http://localhost:8888/api/register', {
+    return axios.post('/api/register', {
         username, password, phone, email, address
     })
 }
 
 const loginUser = (username, password) => {
-    return axios.post('http://localhost:8888/api/login', {
+    return axios.post('/api/login', {
         username, password
     })
+}
+
+const loginUserAdmin = (username, password) => {
+    return axios.post('/api/admin', {
+        username, password
+    })
+}
+
+const fetAllUser = (page, limit) => {
+    return axios.get(`/api/admin/users/read?page=${page}&limit=${limit}`);
+};
+
+const deleteUser = (user) => {
+    return axios.delete('/api/admin/users/delete', { data: { id: user.id } })
+}
+
+const createUser = (data) => {
+    return axios.post('/api/admin/users/create', { ...data })
+}
+
+const updateUser = (userData) => {
+    return axios.put('/api/admin/users/update', { ...userData })
 }
 
 export {
     registerNewuser,
     loginUser,
+    fetAllUser,
+    deleteUser,
+    createUser,
+    updateUser,
+
+    loginUserAdmin,
 };

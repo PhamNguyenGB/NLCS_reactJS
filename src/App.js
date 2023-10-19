@@ -1,11 +1,10 @@
 import './App.scss';
 import Nav from './components/Navigation/nav';
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import AppRoute from './routes/AppRoute';
+import NavAdmin from './components/Admin/Nav/NavAdmin'
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,31 +15,12 @@ import {
 function App() {
   return (
     <Router>
-      <div className='App-container'>
+      <div className='app-header'>
         <Nav />
-        <Switch>
-          <Route path="/about">
-            About
-          </Route>
-          <Route path="/news">
-            News
-          </Route>
-          <Route path="/contact">
-            Contact
-          </Route>
-          <Route path="/login" exact>
-            <Login />
-          </Route>
-          <Route path="/register" exact>
-            <Register />
-          </Route>
-          <Route path="/" exact>
-            Home
-          </Route>
-          <Route path="*">
-            404 not found
-          </Route>
-        </Switch>
+        <NavAdmin />
+      </div>
+      <div className='App-container'>
+        <AppRoute />
       </div>
       <ToastContainer
         position="top-center"

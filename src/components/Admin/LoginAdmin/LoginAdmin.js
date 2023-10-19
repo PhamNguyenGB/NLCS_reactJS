@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './Login.scss'
+import React, { useState } from 'react';
+import './LoginAdmin.scss'
 import { NavLink, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { loginUser } from '../../services/userService';
+import { loginUserAdmin } from '../../../services/userService';
 
 
-const Login = (props) => {
+const LoginAdmin = (props) => {
 
     let history = useHistory();
 
@@ -29,10 +29,16 @@ const Login = (props) => {
             setObjCheckInput({ ...defaultObjInput, isValidPassword: false });
             return;
         }
-        let serverData = await loginUser(username, password);
+        let serverData = await loginUserAdmin(username, password);
         if (+serverData.EC === 0) {
-            toast.success(serverData.EM);
-            history.push("/");
+            let data = {
+                isAuthenticated: true,
+                token: 'fake token',
+            }
+
+            sessionStorage.setItem("account", JSON.stringify(data));
+            history.push("/admin/users");
+            window.location.reload();
         } else {
             toast.error(serverData.EM);
         }
@@ -42,26 +48,19 @@ const Login = (props) => {
         if (event.keyCode === 13 && event.key === 'Enter') {
             handleLogin();
         }
+        console.log(event);
     };
-
-    useEffect(() => {
-        let session = sessionStorage.getItem("account");
-        if (session) {
-            history.push("/");
-            window.location.reload();
-        }
-    }, []);
 
 
     return (
-        <div className='login-container'>
+        <div className='login-container-admin'>
             <div className='container'>
                 <div className='row px-3 px-sm-0 '>
                     <div className='col-3'></div>
-                    <div className='col-9 box-login'>
+                    <div className='col-9 box-login-admin'>
                         <h1>Đăng nhập</h1>
 
-                        <div className='content col-10 col-sm-7 d-flex flex-column gap-3 py-3'>
+                        <div className='content-admin col-10 col-sm-7 d-flex flex-column gap-3 py-3'>
                             <label><b>Tên đăng nhập</b></label>
                             <input
                                 type='text'
@@ -79,8 +78,7 @@ const Login = (props) => {
                                 onChange={(event) => { setPassword(event.target.value) }}
                                 onKeyDown={(event) => handlePressEnter(event)}
                             />
-                            <button className='btn btn-secondary' onClick={() => handleLogin()}>Đăng nhập</button>
-                            <span className='text-center'>Chưa có tài khoản?<NavLink to='/register'>Đăng ký ngay.</NavLink></span>
+                            <button className='btn btn-primary p-2' onClick={() => handleLogin()}>Đăng nhập</button>
                         </div>
 
                     </div>
@@ -90,4 +88,4 @@ const Login = (props) => {
     )
 };
 
-export default Login;
+export default LoginAdmin;

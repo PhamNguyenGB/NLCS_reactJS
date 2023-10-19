@@ -1,27 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import './nav.scss'
-import { NavLink, useHistory, useLocation } from 'react-router-dom';
+import './NavAdmin.scss'
+import { NavLink, useLocation } from 'react-router-dom';
 
 
-const Nav = (props) => {
+const NavAdmin = (props) => {
     const [isShow, setIsShow] = useState(true);
     let location = useLocation();
     useEffect(() => {
-        if (location.pathname === '/admin' || location.pathname === '/admin/users') {
+        if (location.pathname === '/home' || location.pathname === '/news' || location.pathname === 'about' ||
+            location.pathname === '/admin' || location.pathname === '/' || location.pathname === '/login' ||
+            location.pathname === '/register' || location.pathname === '/shoppingCart') {
             setIsShow(false);
         }
     }, []);
-
-    let history = useHistory();
-
-    const handleClickShoppingCarrt = () => {
-        history.push('/shoppingCart');
-    };
-
-    const handleClickImageTextLogo = () => {
-        history.push('/');
-    };
-
 
     return (
         <>
@@ -30,24 +21,6 @@ const Nav = (props) => {
                     <div className="container-fluid parent-header">
                         <div className="topnav">
                             <div className='container'>
-                                <div className='topnav-content1'>
-                                    <div className='image-logo' onClick={() => handleClickImageTextLogo()}></div>
-                                    <div className='text-logo' onClick={() => handleClickImageTextLogo()}>FF function food</div>
-                                    <div className='search d-none d-lg-block'>
-                                        <input className='input-search' type='text' placeholder='Tìm kiếm sản phẩm...' />
-                                        <i className="fa fas fa-search search-icon"></i>
-                                    </div>
-                                    <div className='cart' onClick={() => handleClickShoppingCarrt()}>
-                                        <i className="shopping-icon fa fas fa-shopping-cart"></i>
-                                        <span className='shopping-cart'>Giỏ hàng</span>
-                                    </div>
-                                    <div className='login-register'>
-                                        <NavLink to="/login" exact className=' login'>Đăng nhập</NavLink>
-                                        <NavLink to="/register" exact className='register'>Đăng ký</NavLink>
-                                    </div>
-                                </div>
-
-
                                 <button className="navbar-toggler icon-nav" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                     <span className="navbar-toggler-icon"></span>
                                 </button>
@@ -55,7 +28,7 @@ const Nav = (props) => {
                                     <div className="collapse navbar-collapse show-content-nav-mb" id="navbarSupportedContent">
                                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                             <li className="nav-item">
-                                                <NavLink to="/" exact className='text-sm-dark'>Home</NavLink>
+                                                <NavLink to="/admin/users" exact className='text-sm-dark'>Users</NavLink>
                                             </li>
                                             <li className="nav-item">
                                                 <NavLink to="/news" >News</NavLink>
@@ -65,10 +38,10 @@ const Nav = (props) => {
                                                     Contact
                                                 </NavLink>
                                                 <ul className="dropdown-menu">
-                                                    <li><NavLink className="dropdown-item " to="/action">Action</NavLink></li>
-                                                    <li><NavLink className="dropdown-item " to="/abc">Another action</NavLink></li>
-                                                    <li><NavLink className="dropdown-item " to="/xyz">Another action</NavLink></li>
-                                                    <li><NavLink className="dropdown-item " to="/ew">Another action</NavLink></li>
+                                                    <li><NavLink className="dropdown-item text-dark" to="/action">Action</NavLink></li>
+                                                    <li><NavLink className="dropdown-item text-dark" to="/abc">Another action</NavLink></li>
+                                                    <li><NavLink className="dropdown-item text-dark" to="/xyz">Another action</NavLink></li>
+                                                    <li><NavLink className="dropdown-item text-dark" to="/ew">Another action</NavLink></li>
                                                 </ul>
                                             </li>
                                             <li className="nav-item">
@@ -91,4 +64,4 @@ const Nav = (props) => {
     )
 };
 
-export default Nav;
+export default NavAdmin;

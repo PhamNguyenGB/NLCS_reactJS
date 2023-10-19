@@ -74,8 +74,7 @@ const Register = (props) => {
     const handleRegister = async () => {
         let check = isValidateInputs();
         if (check === true) {
-            let response = await registerNewuser(username, password, phone, email, address);
-            let serverData = response.data;
+            let serverData = await registerNewuser(username, password, phone, email, address);
             if (+serverData.EC === 0) {
                 toast.success(serverData.EM);
                 history.push("/login");
@@ -96,7 +95,6 @@ const Register = (props) => {
                 }
                 toast.error(serverData.EM);
             }
-            console.log(" check response: ", response);
         }
     };
 
