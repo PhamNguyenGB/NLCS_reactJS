@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
-import { createUser, updateUser } from '../../../services/userService'
+import { createUser, updateUser } from '../../../../services/userService'
 
 const ModalUser = (props) => {
 

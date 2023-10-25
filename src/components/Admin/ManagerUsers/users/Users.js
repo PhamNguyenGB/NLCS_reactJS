@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetAllUser, deleteUser } from '../../../services/userService';
+import { fetAllUser, deleteUser } from '../../../../services/userService';
 import ReactPaginate from "react-paginate";
 import { toast } from "react-toastify";
 import ModalDelete from "./ModalDelete";

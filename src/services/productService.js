@@ -5,7 +5,7 @@ const fetAllProduct = (page, limit) => {
 };
 
 const deleteProduct = (user) => {
-    return axios.delete('/api/admin/users/delete', { data: { id: user.id } });
+    return axios.delete('/api/admin/products/delete', { data: { id: user.id } });
 }
 
 const createProduct = (data) => {
@@ -20,8 +20,8 @@ const getUserAccount = () => {
     return axios.get('/api/account');
 }
 
-const logoutUser = () => {
-    return axios.post('/api/logout');
+const fetchListProduct = () => {
+    return axios.get('/api/admin/products/listProduct');
 };
 
 export {
@@ -31,4 +31,5 @@ export {
 
     updateUser,
     getUserAccount,
+    fetchListProduct,
 };

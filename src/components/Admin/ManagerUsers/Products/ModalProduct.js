@@ -4,12 +4,29 @@ import Modal from 'react-bootstrap/Modal';
 import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
-import { createUser, updateUser } from '../../../services/userService';
-import { createProduct } from '../../../services/productService';
+import { createUser, updateUser } from '../../../../services/userService';
+import { createProduct } from '../../../../services/productService';
+import { fetchListProduct } from '../../../../services/productService';
 
-const ModalUser = (props) => {
+const ModalProduct = (props) => {
 
-    const { action, dataModelUser } = props;
+    const { action, dataModelProduct } = props;
+
+    const [listProduct, setListProducts] = useState([]);
+
+    useEffect(() => {
+        getListProduct();
+    }, []);
+
+    const getListProduct = async () => {
+        let response = await fetchListProduct();
+        console.log(response);
+        if (response && +response.EC === 0) {
+            setListProducts(response.DT);
+        } else {
+            return alert('error');
+        }
+    };
 
     const defaultUserData = {
         name: '',
@@ -96,9 +113,9 @@ const ModalUser = (props) => {
 
     useEffect(() => {
         if (action === 'UPDATE') {
-            setProductData({ ...dataModelUser, groupId: dataModelUser.Group ? dataModelUser.Group.id : '' });
+            setProductData({ ...dataModelProduct, groupId: dataModelProduct.Group ? dataModelProduct.Group.id : '' });
         }
-    }, [dataModelUser]);
+    }, [dataModelProduct]);
 
     return (
         <>
@@ -202,7 +219,7 @@ const ModalUser = (props) => {
                                 onChange={(event) => handleOnchangeInput(event.target.value, 'quantity')}
                             />
                         </div>
-                        <form className='col-3' enctype="multipart/form-data">
+                        <form className='col-3' encType="multipart/form-data">
                             <div className=' form-group'>
                                 <label>image:</label>
                                 <input
@@ -223,8 +240,13 @@ const ModalUser = (props) => {
                                 value={productData.listProductId}
                             >
                                 <option defaultValue value=''>Open this select menu</option>
-                                <option value="1">Customer</option>
-                                <option value="2">Admin</option>
+                                {listProduct.length > 0 &&
+                                    listProduct.map((item, index) => {
+                                        return (
+                                            <option key={`listProduct-${index}`} value={item.id}>{item.categoryName}</option>
+                                        )
+                                    })
+                                }
                             </select>
                         </div>
                     </div>
@@ -242,4 +264,4 @@ const ModalUser = (props) => {
     )
 };
 
-export default ModalUser;
+export default ModalProduct;

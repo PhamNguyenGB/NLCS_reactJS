@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { fetAllUser, deleteUser } from '../../../services/userService';
-import { fetAllProduct, deleteProduct } from '../../../services/productService';
+import { fetAllUser, deleteUser } from '../../../../services/userService';
+import { fetAllProduct, deleteProduct } from '../../../../services/productService';
 import ReactPaginate from "react-paginate";
 import { toast } from "react-toastify";
-import ModalDelete from "./ModalDelete";
+import ModalDeleteProduct from "./ModalDeleteProduct";
 import ModalProduct from "./ModalProduct";
 import './Products.scss';
 
+
 const Products = (props) => {
-    const [listUsers, setListUsers] = useState([]);
+    const [listProducts, setListProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentLimit, setCurrentLimit] = useState(5);
     const [totalPages, setTotalPages] = useState(0);
@@ -28,9 +29,10 @@ const Products = (props) => {
 
     const fetchProducts = async () => {
         let response = await fetAllProduct(currentPage, currentLimit);
+        console.log(response);
         if (response && response.EC === 0) {
             setTotalPages(response.DT.totalPages);
-            setListUsers(response.DT.users);
+            setListProducts(response.DT.products);
         }
     };
 
@@ -38,13 +40,13 @@ const Products = (props) => {
         setCurrentPage(+event.selected + 1);
     };
 
-    const handleDeleteUser = async (user) => {
-        setDataModel(user);
+    const handleDeleteUser = async (product) => {
+        setDataModel(product);
         setIsShowModalDelete(true);
     }
 
-    const confirmDeleteUser = async () => {
-        let response = await deleteUser(dataModel);
+    const confirmDeleteProduct = async () => {
+        let response = await deleteProduct(dataModel);
         if (response && response.EC === 0) {
             toast.success(response.EM);
             await fetchProducts();
@@ -106,9 +108,9 @@ const Products = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {listUsers && listUsers.length > 0 ?
+                            {listProducts && listProducts.length > 0 ?
                                 <>
-                                    {listUsers.map((item, index) => {
+                                    {listProducts.map((item, index) => {
                                         return (
                                             <tr key={`row-${index}`}>
                                                 <th>{(currentPage - 1) * currentLimit + index + 1}</th>
@@ -167,10 +169,10 @@ const Products = (props) => {
                     </div>
                 }
             </div>
-            <ModalDelete
+            <ModalDeleteProduct
                 show={isShowModalDelete}
                 handleClose={handleClose}
-                confirmDeleteUser={confirmDeleteUser}
+                confirmDeleteProduct={confirmDeleteProduct}
                 dataModel={dataModel}
             />
             <ModalProduct

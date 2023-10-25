@@ -5,9 +5,9 @@ import {
 import Login from '../components/Login/Login';
 import Register from '../components/Register/Register';
 import LoginAdmin from '../components/Admin/LoginAdmin/LoginAdmin';
-import Users from '../components/Admin/ManagerUsers/Users';
+import Users from '../components/Admin/ManagerUsers/users/Users';
 import PrivateRoute from "./PrivateRoute";
-import Products from "../components/Admin/ManagerUsers/Products";
+import Products from "../components/Admin/ManagerUsers/Products/Products";
 
 const AppRoute = (props) => {
     return (
