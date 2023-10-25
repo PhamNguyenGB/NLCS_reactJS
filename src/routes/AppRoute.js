@@ -7,6 +7,7 @@ import Register from '../components/Register/Register';
 import LoginAdmin from '../components/Admin/LoginAdmin/LoginAdmin';
 import Users from '../components/Admin/ManagerUsers/Users';
 import PrivateRoute from "./PrivateRoute";
+import Products from "../components/Admin/ManagerUsers/Products";
 
 const AppRoute = (props) => {
     return (
@@ -32,7 +33,7 @@ const AppRoute = (props) => {
                     <LoginAdmin />
                 </Route>
                 <PrivateRoute path="/admin/users" component={Users} />
-
+                <PrivateRoute path="/admin/products" component={Products} />
 
                 <Route path="/" exact>
                     Home

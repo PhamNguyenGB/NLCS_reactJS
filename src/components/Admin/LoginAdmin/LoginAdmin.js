@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './LoginAdmin.scss'
 import { NavLink, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { loginUserAdmin } from '../../../services/userService';
-
+import { UserContext } from '../../../context/userContext';
 
 const LoginAdmin = (props) => {
+    const { loginContext } = useContext(UserContext);
 
     let history = useHistory();
 
@@ -31,12 +32,19 @@ const LoginAdmin = (props) => {
         }
         let serverData = await loginUserAdmin(username, password);
         if (+serverData.EC === 0) {
+
+            let email = serverData.DT.email;
+            let username = serverData.DT.username;
+            let phone = serverData.DT.phone;
+            let token = serverData.DT.access_token;
             let data = {
                 isAuthenticated: true,
-                token: 'fake token',
+                token,
+                account: { username, email, phone }
             }
 
-            sessionStorage.setItem("account", JSON.stringify(data));
+            loginContext(data);
+
             history.push("/admin/users");
             window.location.reload();
         } else {
@@ -48,7 +56,6 @@ const LoginAdmin = (props) => {
         if (event.keyCode === 13 && event.key === 'Enter') {
             handleLogin();
         }
-        console.log(event);
     };
 
 

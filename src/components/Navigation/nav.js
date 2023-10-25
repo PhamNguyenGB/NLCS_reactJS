@@ -6,9 +6,12 @@ import { NavLink, useHistory, useLocation } from 'react-router-dom';
 const Nav = (props) => {
     const [isShow, setIsShow] = useState(true);
     let location = useLocation();
+    let path = ['/admin', '/admin/users', '/admin/products'];
     useEffect(() => {
-        if (location.pathname === '/admin' || location.pathname === '/admin/users') {
-            setIsShow(false);
+        for (let i = 0; i < path.length; i++) {
+            if (location.pathname === path[i]) {
+                setIsShow(false);
+            }
         }
     }, []);
 

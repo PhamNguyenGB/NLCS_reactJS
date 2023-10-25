@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Login.scss'
 import { NavLink, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { loginUser } from '../../services/userService';
-
+import { UserContext } from '../../context/userContext';
 
 const Login = (props) => {
+    const { loginContext } = useContext(UserContext);
 
     let history = useHistory();
 
@@ -31,6 +32,18 @@ const Login = (props) => {
         }
         let serverData = await loginUser(username, password);
         if (+serverData.EC === 0) {
+            let email = serverData.DT.email;
+            let username = serverData.DT.username;
+            let phone = serverData.DT.phone;
+            let address = serverData.DT.address;
+            let token = serverData.DT.access_token;
+            let data = {
+                isAuthenticated: true,
+                token,
+                account: { username, email, phone, address }
+            }
+            loginContext(data);
+
             toast.success(serverData.EM);
             history.push("/");
         } else {
@@ -43,15 +56,6 @@ const Login = (props) => {
             handleLogin();
         }
     };
-
-    useEffect(() => {
-        let session = sessionStorage.getItem("account");
-        if (session) {
-            history.push("/");
-            window.location.reload();
-        }
-    }, []);
-
 
     return (
         <div className='login-container'>
