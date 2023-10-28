@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { createUser, updateUser } from '../../../../services/userService';
 import { createProduct } from '../../../../services/productService';
 import { fetchListProduct } from '../../../../services/productService';
+import './Products.scss';
 
 const ModalProduct = (props) => {
 
@@ -20,7 +21,6 @@ const ModalProduct = (props) => {
 
     const getListProduct = async () => {
         let response = await fetchListProduct();
-        console.log(response);
         if (response && +response.EC === 0) {
             setListProducts(response.DT);
         } else {
@@ -28,7 +28,7 @@ const ModalProduct = (props) => {
         }
     };
 
-    const defaultUserData = {
+    const defaultProductData = {
         name: '',
         ingredients: '',
         objectOfUse: '',
@@ -58,8 +58,10 @@ const ModalProduct = (props) => {
         listProductId: true,
     }
 
-    const [productData, setProductData] = useState(defaultUserData);
+    const [productData, setProductData] = useState(defaultProductData);
     const [validInput, setValidInput] = useState(validInputDefault);
+    const [previewImage, setPreviewImage] = useState('');
+    const [getFile, setGetFile] = useState('');
 
     let history = useHistory();
 
@@ -75,7 +77,7 @@ const ModalProduct = (props) => {
             return true;
         }
         setValidInput(validInputDefault);
-        let arr = ['name', 'ingredients', 'objectOfUse', 'uses', 'preserve', 'pack', 'origin', 'productionSite', 'price', 'quantity', 'img', 'listProductId'];
+        let arr = ['name', 'ingredients', 'objectOfUse', 'uses', 'preserve', 'pack', 'origin', 'productionSite', 'price', 'quantity', 'listProductId'];
         let check = true;
         for (let i = 0; i < arr.length; i++) {
             if (!productData[arr[i]]) {
@@ -99,7 +101,8 @@ const ModalProduct = (props) => {
             let serverData = action === 'CREATE' ? await createProduct(productData) : await updateUser(productData);
             if (+serverData.EC === 0) {
                 toast.success(serverData.EM);
-                setProductData(defaultUserData);
+                console.log(productData);
+                setProductData(defaultProductData);
                 props.onHide();
             }
         }
@@ -107,13 +110,39 @@ const ModalProduct = (props) => {
 
     const handleCloseModalUser = () => {
         props.onHide();
-        setProductData(defaultUserData);
+        setProductData(defaultProductData);
         setValidInput(validInputDefault);
+        setPreviewImage('');
+    };
+
+    // const getBase64 = async (file) => {
+    //     return new Promise((resolve, reject) => {
+    //         const reader = new FileReader()
+    //         reader.readAsDataURL(file)
+    //         reader.onload = () => {
+    //             resolve(reader.result)
+    //         }
+    //         reader.onerror = reject
+    //     })
+    // }
+
+    const handleOnchangeImage = async (event) => {
+        try {
+            let data = event.target.files;
+            let file = data[0];
+            if (file) {
+                let objectUrl = URL.createObjectURL(file);
+                setPreviewImage(objectUrl);
+                setGetFile(file);
+            }
+        } catch (error) {
+
+        }
     };
 
     useEffect(() => {
         if (action === 'UPDATE') {
-            setProductData({ ...dataModelProduct, groupId: dataModelProduct.Group ? dataModelProduct.Group.id : '' });
+            setProductData({ ...dataModelProduct, groupId: dataModelProduct.List_Product ? dataModelProduct.List_Product.id : '' });
         }
     }, [dataModelProduct]);
 
@@ -201,7 +230,7 @@ const ModalProduct = (props) => {
                                 onChange={(event) => handleOnchangeInput(event.target.value, 'productionSite')}
                             />
                         </div>
-                        <div className='col-3 form-group'>
+                        <div className='col-4 form-group'>
                             <label>Giá: </label>
                             <input
                                 className={validInput.price ? 'form-control' : 'form-control is-invalid'}
@@ -210,7 +239,7 @@ const ModalProduct = (props) => {
                                 onChange={(event) => handleOnchangeInput(event.target.value, 'price')}
                             />
                         </div>
-                        <div className='col-3 form-group'>
+                        <div className='col-4 form-group'>
                             <label>Số lượng hàng: </label>
                             <input
                                 className={validInput.quantity ? 'form-control' : 'form-control is-invalid'}
@@ -219,18 +248,7 @@ const ModalProduct = (props) => {
                                 onChange={(event) => handleOnchangeInput(event.target.value, 'quantity')}
                             />
                         </div>
-                        <form className='col-3' encType="multipart/form-data">
-                            <div className=' form-group'>
-                                <label>image:</label>
-                                <input
-                                    className={validInput.img ? 'form-control' : 'form-control is-invalid'}
-                                    type='file'
-                                    value={productData.img}
-                                    onChange={(event) => handleOnchangeInput(event.target.value, 'img')}
-                                />
-                            </div>
-                        </form>
-                        <div className='col-3 form-group'>
+                        <div className='col-4 form-group'>
                             <label>Loại sản phẩm:</label>
                             <select
                                 className={validInput.listProductId ? 'form-select' : 'form-select is-invalid'}
@@ -249,8 +267,27 @@ const ModalProduct = (props) => {
                                 }
                             </select>
                         </div>
+                        <div className='form-image'>
+                            <form encType="multipart/form-data">
+                                <div className=' form-group col-6'>
+                                    <label>image:</label>
+                                    <input
+                                        className={validInput.img ? 'form-control' : 'form-control is-invalid'}
+                                        type='file'
+                                        defaultValue={productData.img}
+                                        onChange={(event) => handleOnchangeInput(event.target.files[0], 'img')}
+                                        onChangeCapture={(event) => handleOnchangeImage(event)}
+                                    />
+                                </div>
+                                <div className='col-1 check-image'>
+                                    <img
+                                        src={previewImage}
+                                    />
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </Modal.Body>
+                </Modal.Body >
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => handleCloseModalUser()}>
                         Close
@@ -259,7 +296,7 @@ const ModalProduct = (props) => {
                         {action === "CREATE" ? "Save" : "Update"}
                     </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal >
         </>
     )
 };

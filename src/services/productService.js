@@ -9,6 +9,7 @@ const deleteProduct = (user) => {
 }
 
 const createProduct = (data) => {
+    console.log("check data: ", data);
     return axios.post('/api/admin/products/create', { ...data });
 }
 

@@ -8,6 +8,7 @@ import LoginAdmin from '../components/Admin/LoginAdmin/LoginAdmin';
 import Users from '../components/Admin/ManagerUsers/users/Users';
 import PrivateRoute from "./PrivateRoute";
 import Products from "../components/Admin/ManagerUsers/Products/Products";
+import Home from "../components/home/Home";
 
 const AppRoute = (props) => {
     return (
@@ -36,7 +37,7 @@ const AppRoute = (props) => {
                 <PrivateRoute path="/admin/products" component={Products} />
 
                 <Route path="/" exact>
-                    Home
+                    <Home />
                 </Route>
                 <Route path="*">
                     404 not found

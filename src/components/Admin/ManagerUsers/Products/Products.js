@@ -29,7 +29,6 @@ const Products = (props) => {
 
     const fetchProducts = async () => {
         let response = await fetAllProduct(currentPage, currentLimit);
-        console.log(response);
         if (response && response.EC === 0) {
             setTotalPages(response.DT.totalPages);
             setListProducts(response.DT.products);
