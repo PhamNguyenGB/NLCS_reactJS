@@ -1,5 +1,6 @@
 import React, { useState, createContext, useEffect } from "react";
 import { getUserAccount } from "../services/userService";
+
 const UserContext = createContext(null);
 
 const UserProvider = ({ children }) => {
@@ -45,10 +46,10 @@ const UserProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        if (window.location.pathname !== '/' && window.location.pathname !== '/admin' && window.location.pathname !== '/login') {
-            fetchUser();
-        } else {
+        if (window.location.pathname !== '/admin/users' && window.location.pathname !== '/admin/products' && window.location.pathname !== '/admin/listProducts' && window.location.pathname !== '/shoppingCart') {
             setUser({ ...user, isLoading: false });
+        } else {
+            fetchUser();
         }
     }, [])
 

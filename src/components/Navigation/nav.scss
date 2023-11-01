@@ -176,12 +176,24 @@ body {
             }
 
             a.active {
-                background-color: #333;
+                background-color: #ccc;
                 color: white;
             }
 
             .search-mb {
                 margin-left: 100px;
+            }
+
+            .nav-item {
+
+                .show-dropdown {
+                    width: 285px;
+                    margin: 0;
+
+                    a {
+                        color: #54b859;
+                    }
+                }
             }
         }
     }

@@ -1,0 +1,29 @@
+.cart-item {
+    max-width: 840px;
+    padding: 0 12px;
+    margin-top: 48px;
+}
+
+.total-cost {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+
+    .pay {
+        display: flex;
+        gap: 185px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+
+    .order {
+        padding: 10px;
+        background-color: #187733;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 18px;
+        text-align: center;
+        font-weight: 500;
+        cursor: pointer;
+    }
+}

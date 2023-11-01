@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './nav.scss'
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
-
+import { fetchListProduct } from '../../services/productService';
 
 const Nav = (props) => {
     const [isShow, setIsShow] = useState(true);
+
     let location = useLocation();
     let path = ['/admin', '/admin/users', '/admin/products'];
     useEffect(() => {
@@ -15,6 +16,21 @@ const Nav = (props) => {
         }
     }, []);
 
+    const [listProduct, setListProducts] = useState([]);
+
+    useEffect(() => {
+        getListProduct();
+    }, []);
+
+    const getListProduct = async () => {
+        let response = await fetchListProduct();
+        if (response && +response.EC === 0) {
+            setListProducts(response.DT);
+        } else {
+            return alert('error');
+        }
+    };
+
     let history = useHistory();
 
     const handleClickShoppingCarrt = () => {
@@ -24,6 +40,11 @@ const Nav = (props) => {
     const handleClickImageTextLogo = () => {
         history.push('/');
     };
+
+    // const handleClickListProduct = (data) => {
+    //     console.log(data);
+    //     history.push(`/product/${data.categoryName}/${data.id}`);
+    // };
 
 
     return (
@@ -58,24 +79,35 @@ const Nav = (props) => {
                                     <div className="collapse navbar-collapse show-content-nav-mb" id="navbarSupportedContent">
                                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                             <li className="nav-item">
-                                                <NavLink to="/" exact className='text-sm-dark'>Home</NavLink>
+                                                <NavLink to="/" exact className='text-sm-dark'>TRANG CHỦ</NavLink>
                                             </li>
                                             <li className="nav-item">
-                                                <NavLink to="/news" >News</NavLink>
+                                                <NavLink to="/news" >TIN TỨC</NavLink>
                                             </li>
                                             <li className="nav-item dropdown">
                                                 <NavLink to="/contact" className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Contact
+                                                    THỰC PHẨM CHỨC NĂNG
                                                 </NavLink>
-                                                <ul className="dropdown-menu">
-                                                    <li><NavLink className="dropdown-item " to="/action">Action</NavLink></li>
-                                                    <li><NavLink className="dropdown-item " to="/abc">Another action</NavLink></li>
-                                                    <li><NavLink className="dropdown-item " to="/xyz">Another action</NavLink></li>
-                                                    <li><NavLink className="dropdown-item " to="/ew">Another action</NavLink></li>
+                                                <ul className="dropdown-menu show-dropdown">
+                                                    {listProduct ?
+                                                        listProduct.map((item, index) => {
+                                                            return (
+                                                                <li key={`product-${index + 1}`}><NavLink
+                                                                    className="dropdown-item "
+                                                                    to={`/listProduct/${item.categoryName}`}
+                                                                >
+                                                                    {item.categoryName}
+                                                                </NavLink></li>
+                                                            )
+                                                        })
+                                                        :
+                                                        <>
+                                                        </>
+                                                    }
                                                 </ul>
                                             </li>
                                             <li className="nav-item">
-                                                <NavLink to="/about" >About</NavLink>
+                                                <NavLink to="/about" >GIỚI THIỆU</NavLink>
                                             </li>
                                         </ul>
                                     </div>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { fetAllUser, deleteUser } from '../../../../services/userService';
 import { fetAllProduct, deleteProduct } from '../../../../services/productService';
 import ReactPaginate from "react-paginate";
 import { toast } from "react-toastify";
@@ -21,7 +20,7 @@ const Products = (props) => {
     // modal update/ create user
     const [isShowModalUser, setIsShowModalUser] = useState(false);
     const [actionModalUser, setActionModalUser] = useState("CREATE");
-    const [dataModelUser, setDataModelUser] = useState({});
+    const [dataModelProduct, setDataModelProduct] = useState({});
 
     useEffect(() => {
         fetchProducts();
@@ -60,21 +59,22 @@ const Products = (props) => {
         setDataModel({});
     };
 
-    const onHideModalUser = async () => {
+    const onHideModalProduct = async () => {
         setIsShowModalUser(false);
-        setDataModelUser({});
+        setDataModelProduct({});
         await fetchProducts();
     };
 
     const handleUpdateUser = (user) => {
         setActionModalUser("UPDATE");
-        setDataModelUser(user);
+        setDataModelProduct(user);
+        console.log(dataModelProduct);
         setIsShowModalUser(true);
     };
 
     return (
         <>
-            <div className="manager-users-container container position-relative">
+            <div className="manager-products-container container position-relative">
                 <div className="user-header">
                     <div className="title m-3">
                         <h3>TABLE USER</h3>
@@ -117,7 +117,7 @@ const Products = (props) => {
                                                 <td>{item.name}</td>
                                                 <td>
                                                     <img
-                                                        src={item.img} className="img-thumbnail image-product" alt="..." />
+                                                        src={`http://localhost:8888/${item.img}`} className="img-thumbnail image-product" alt="..." />
                                                 </td>
                                                 <td>{item.quantity}</td>
                                                 <td>{item.price}</td>
@@ -143,7 +143,7 @@ const Products = (props) => {
                     </table>
 
                 </div>
-                {totalPages > 0 &&
+                {totalPages > 1 &&
                     <div className="user-footer position-absolute end-0 mt-5">
                         <ReactPaginate
                             nextLabel="next >"
@@ -176,9 +176,9 @@ const Products = (props) => {
             />
             <ModalProduct
                 isShowModalUser={isShowModalUser}
-                onHide={onHideModalUser}
+                onHide={onHideModalProduct}
                 action={actionModalUser}
-                dataModelUser={dataModelUser}
+                dataModelProduct={dataModelProduct}
             />
         </>
     )

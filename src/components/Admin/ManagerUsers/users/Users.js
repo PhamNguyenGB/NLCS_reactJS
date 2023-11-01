@@ -136,7 +136,7 @@ const Users = (props) => {
                     </table>
 
                 </div>
-                {totalPages > 0 &&
+                {totalPages > 1 &&
                     <div className="user-footer position-absolute end-0 mt-5">
                         <ReactPaginate
                             nextLabel="next >"

@@ -274,6 +274,7 @@ const ModalProduct = (props) => {
                                     <input
                                         className={validInput.img ? 'form-control' : 'form-control is-invalid'}
                                         type='file'
+                                        name='img'
                                         defaultValue={productData.img}
                                         onChange={(event) => handleOnchangeInput(event.target.files[0], 'img')}
                                         onChangeCapture={(event) => handleOnchangeImage(event)}
