@@ -7,6 +7,7 @@ import AppRoute from './routes/AppRoute';
 import NavAdmin from './components/Admin/Nav/NavAdmin';
 import { Oval } from 'react-loader-spinner';
 import { UserContext } from './context/userContext';
+import Footer from './components/Navigation/footer';
 import {
   BrowserRouter as Router,
   Switch,
@@ -46,6 +47,7 @@ function App() {
           </div>
         </>
       }
+      <Footer />
       <ToastContainer
         position="top-center"
         autoClose={5000}

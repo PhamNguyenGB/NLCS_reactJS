@@ -3,11 +3,12 @@ import { getListProduct } from '../../services/customerService';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+import numeral from 'numeral';
 
 const ListProduct = (props) => {
     const [listProduct, setListProduct] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [currentLimit, setCurrentLimit] = useState(20);
+    const [currentLimit, setCurrentLimit] = useState(15);
     const [totalPages, setTotalPages] = useState(0);
 
     const { categoryName } = useParams();
@@ -35,6 +36,10 @@ const ListProduct = (props) => {
         history.push(`/product/${data.name}/${data.id}`);
     };
 
+    const formatCash = (price) => {
+        return numeral(price).format('0,0');
+    }
+
     return (
         <>
             <div className='container position-relative'>
@@ -46,11 +51,22 @@ const ListProduct = (props) => {
                                 return (
 
                                     <div className="card card-product col-3 m-2" key={`product-${index}`}>
-                                        <img role='button' src={`http://localhost:8888${item.img}`} alt="..." onClick={() => handleOnclick(item)} />
+                                        <img role='button' src={item.img} alt="..." onClick={() => handleOnclick(item)} />
                                         <div className="card-body mt-5">
                                             <h6 className="card-title card-title-product" role='button' onClick={() => handleOnclick(item)}>{item.name}</h6>
-                                            <h4 className="card-text mt-5 text-primary" role='button' onClick={() => handleOnclick(item)}>{item.price} vnđ</h4>
-                                            <a href="#" className="btn btn-primary mt-3" onClick={() => handleOnclick(item)}>Mua ngay</a>
+                                            <h4 className="card-text mt-5 text-primary" role='button' onClick={() => handleOnclick(item)}>{formatCash(item.price)} vnđ</h4>
+                                            <a
+                                                href="#"
+                                                className="btn btn-primary mt-3"
+                                                onClick={() => handleOnclick(item)}
+                                                style={{
+                                                    padding: '10px 51px',
+                                                    backgroundColor: '#5dac46',
+                                                    border: '1px solid #5dac46',
+                                                }}
+                                            >
+                                                Thêm vào giỏ hàng
+                                            </a>
                                         </div>
                                     </div>
                                 )

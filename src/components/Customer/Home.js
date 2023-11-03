@@ -1,13 +1,14 @@
-import './Home.scss'
+import './Home.scss';
 import { useEffect, useState } from "react";
 import { fetAllProduct } from '../../services/productService';
 import ReactPaginate from "react-paginate";
 import { NavLink, useHistory } from 'react-router-dom';
+import numeral from 'numeral';
 
 const Home = (props) => {
     const [listProducts, setListProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [currentLimit, setCurrentLimit] = useState(20);
+    const [currentLimit, setCurrentLimit] = useState(15);
     const [totalPages, setTotalPages] = useState(0);
 
     let history = useHistory();
@@ -31,6 +32,14 @@ const Home = (props) => {
     const handleOnclick = async (data) => {
         history.push(`/product/${data.name}/${data.id}`);
     };
+
+    const handleOnclickBuy = (data) => {
+        console.log(data);
+    };
+
+    const formatCash = (price) => {
+        return numeral(price).format('0,0');
+    }
 
     return (
         <>
@@ -83,11 +92,11 @@ const Home = (props) => {
                                 return (
 
                                     <div className="card card-product col-3 m-2" key={`product-${index}`}>
-                                        <img role='button' src={`http://localhost:8888${item.img}`} alt="..." onClick={() => handleOnclick(item)} />
+                                        <img role='button' src={item.img} alt="..." onClick={() => handleOnclick(item)} />
                                         <div className="card-body mt-5">
                                             <h6 className="card-title card-title-product" role='button' onClick={() => handleOnclick(item)}>{item.name}</h6>
-                                            <h4 className="card-text mt-5 text-primary" role='button' onClick={() => handleOnclick(item)}>{item.price} vnđ</h4>
-                                            <a href="#" className="btn btn-primary mt-3" onClick={() => handleOnclick(item)}>Mua ngay</a>
+                                            <h4 className="card-text mt-5 text-primary" role='button' onClick={() => handleOnclick(item)}>{formatCash(item.price)} vnđ</h4>
+                                            <a href="/shoppingCart" className="btn btn-primary mt-3 add-cart" onClick={() => handleOnclickBuy(item)}>Thêm vào giỏ hàng</a>
                                         </div>
                                     </div>
                                 )

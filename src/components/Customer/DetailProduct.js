@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { detailProduct } from '../../services/customerService';
-import './DetailProduct.scss'
+import './DetailProduct.scss';
+import numeral from 'numeral';
+
 const DetailProduct = (props) => {
+
+    const [quantity, setQuantity] = useState(1);
 
     const { name, id } = useParams();
     const [product, setProduct] = useState([]);
+
     const fetchProducts = async () => {
         let response = await detailProduct(name, id);
         if (response && response.EC === 0) {
@@ -13,9 +18,28 @@ const DetailProduct = (props) => {
         }
     };
 
+    const formatCash = (price) => {
+        return numeral(price).format('0,0');
+    }
+
     useEffect(() => {
         fetchProducts();
-    }, []);
+    }, [quantity]);
+
+    const handleOnclickIncrease = () => {
+        setQuantity(preQuantity => preQuantity + 1);
+    }
+
+    const handleOnclickDecrease = () => {
+        setQuantity(preQuantity => preQuantity - 1);
+        if (quantity < 2) {
+            setQuantity(1);
+        }
+    }
+
+    const handleOnChangeInput = (event) => {
+        console.log(event);
+    };
 
 
     return (
@@ -23,15 +47,15 @@ const DetailProduct = (props) => {
             {product ?
                 <div className="container">
                     <div className="top-content row mt-5">
-                        <img src={`http://localhost:8888${product.img}`} className="img-thumbnail img-detail col-6" alt="..." />
+                        <img src={product.img} className="img-thumbnail img-detail col-6" alt="..." />
                         <div className="col-6 right-content">
                             <h4 className="col-12 name-product ">{product.name}</h4>
-                            <h4 className="price col-12 mt-5">{product.price} đ</h4>
+                            <h4 className="price col-12 mt-5">{formatCash(product.price)} vnđ</h4>
                             <form className="col-12 mt-4">
                                 <span>Chọn số lượng: </span>
-                                <div className="value-button decrease" ><span>-</span></div>
-                                <input type="number" className="number" defaultValue="1" />
-                                <div className="value-button increase"><span>+</span></div>
+                                <div className="value-button decrease" onClick={() => handleOnclickDecrease()}><span>-</span></div>
+                                <input type="number" className="number" value={quantity} onChange={(event) => handleOnChangeInput(event)} />
+                                <div className="value-button increase" onClick={() => handleOnclickIncrease()}><span>+</span></div>
                             </form>
                             <div className="col-4 buy mt-3">
                                 CHỌN MUA

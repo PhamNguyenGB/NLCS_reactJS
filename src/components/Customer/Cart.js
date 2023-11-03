@@ -3,10 +3,10 @@ import './Cart.scss';
 const Cart = (props) => {
     return (
         <>
-            <div className="container mt-5">
+            <div className="container mt-5 container-cart">
                 <div className="row">
                     <div className="col-9 cart-item">
-                        <table class="table">
+                        <table className="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Sản phẩm</th>
@@ -17,14 +17,14 @@ const Cart = (props) => {
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody class="table-group-divider">
+                            <tbody className="table-group-divider">
                                 <tr>
                                     <td>Mark</td>
                                     <td>Otto</td>
                                     <td>@mdo</td>
                                     <td>@mdo</td>
                                     <td>@mdo</td>
-                                    <td>@mdo</td>
+                                    <td><i className="fa fas fa-trash"></i></td>
                                 </tr>
                             </tbody>
                         </table>

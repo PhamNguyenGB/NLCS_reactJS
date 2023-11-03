@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import ModalDeleteProduct from "./ModalDeleteProduct";
 import ModalProduct from "./ModalProduct";
 import './Products.scss';
+import numeral from 'numeral';
 
 
 const Products = (props) => {
@@ -28,6 +29,7 @@ const Products = (props) => {
 
     const fetchProducts = async () => {
         let response = await fetAllProduct(currentPage, currentLimit);
+        console.log("check res:", response);
         if (response && response.EC === 0) {
             setTotalPages(response.DT.totalPages);
             setListProducts(response.DT.products);
@@ -38,7 +40,7 @@ const Products = (props) => {
         setCurrentPage(+event.selected + 1);
     };
 
-    const handleDeleteUser = async (product) => {
+    const handleDeleteProduct = async (product) => {
         setDataModel(product);
         setIsShowModalDelete(true);
     }
@@ -65,19 +67,24 @@ const Products = (props) => {
         await fetchProducts();
     };
 
-    const handleUpdateUser = (user) => {
+    const handleUpdateProduct = (product) => {
+        console.log(product);
         setActionModalUser("UPDATE");
-        setDataModelProduct(user);
+        setDataModelProduct(product);
         console.log(dataModelProduct);
         setIsShowModalUser(true);
     };
+
+    const formatCash = (price) => {
+        return numeral(price).format('0,0');
+    }
 
     return (
         <>
             <div className="manager-products-container container position-relative">
                 <div className="user-header">
                     <div className="title m-3">
-                        <h3>TABLE USER</h3>
+                        <h3>TABLE PRODUCTS</h3>
                     </div>
                     <div className="actions m-3">
                         <button
@@ -88,7 +95,7 @@ const Products = (props) => {
                             }}
                         >
                             <i className="fa fas fa-plus m-1"></i>
-                            Add new user
+                            Add new product
                         </button>
                     </div>
                 </div>
@@ -117,16 +124,16 @@ const Products = (props) => {
                                                 <td>{item.name}</td>
                                                 <td>
                                                     <img
-                                                        src={`http://localhost:8888/${item.img}`} className="img-thumbnail image-product" alt="..." />
+                                                        src={item.img} className="img-thumbnail image-product" alt="..." />
                                                 </td>
                                                 <td>{item.quantity}</td>
-                                                <td>{item.price}</td>
+                                                <td>{formatCash(item.price)} vnđ</td>
 
                                                 <td>
-                                                    <button className="btn btn-warning m-1" onClick={() => handleUpdateUser(item)}>
+                                                    <button className="btn btn-warning m-1" onClick={() => handleUpdateProduct(item)}>
                                                         Update
                                                     </button>
-                                                    <button className="btn btn-danger" onClick={() => handleDeleteUser(item)}>Delete</button>
+                                                    <button className="btn btn-danger" onClick={() => handleDeleteProduct(item)}>Delete</button>
                                                 </td>
                                             </tr>
                                         )

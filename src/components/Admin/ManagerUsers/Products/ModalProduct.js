@@ -5,13 +5,15 @@ import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 import { createUser, updateUser } from '../../../../services/userService';
-import { createProduct } from '../../../../services/productService';
+import { createProduct, updateProduct } from '../../../../services/productService';
 import { fetchListProduct } from '../../../../services/productService';
 import './Products.scss';
 
 const ModalProduct = (props) => {
 
     const { action, dataModelProduct } = props;
+
+    console.log('Modal Product', dataModelProduct);
 
     const [listProduct, setListProducts] = useState([]);
 
@@ -77,7 +79,7 @@ const ModalProduct = (props) => {
             return true;
         }
         setValidInput(validInputDefault);
-        let arr = ['name', 'ingredients', 'objectOfUse', 'uses', 'preserve', 'pack', 'origin', 'productionSite', 'price', 'quantity', 'listProductId'];
+        let arr = ['name', 'ingredients', 'objectOfUse', 'uses', 'preserve', 'pack', 'origin', 'productionSite', 'price', 'quantity', 'listProductId', 'img'];
         let check = true;
         for (let i = 0; i < arr.length; i++) {
             if (!productData[arr[i]]) {
@@ -98,12 +100,12 @@ const ModalProduct = (props) => {
         // create user
         let check = checkValidateInput();
         if (check === true) {
-            let serverData = action === 'CREATE' ? await createProduct(productData) : await updateUser(productData);
+            let serverData = action === 'CREATE' ? await createProduct(productData) : await updateProduct(productData);
             if (+serverData.EC === 0) {
                 toast.success(serverData.EM);
-                console.log(productData);
                 setProductData(defaultProductData);
                 props.onHide();
+                setPreviewImage('');
             }
         }
     };
@@ -168,7 +170,6 @@ const ModalProduct = (props) => {
                         <div className='col-12 form-group'>
                             <label>Thành phần: </label>
                             <input
-                                disabled={action === 'CREATE' ? false : true}
                                 className={validInput.ingredients ? 'form-control' : 'form-control is-invalid'}
                                 type='text'
                                 value={productData.ingredients}
@@ -187,7 +188,6 @@ const ModalProduct = (props) => {
                         <div className='col-12 form-group'>
                             <label>Cách dùng: </label>
                             <input
-                                disabled={action === 'CREATE' ? false : true}
                                 className={validInput.uses ? 'form-control' : 'form-control is-invalid'}
                                 type='text'
                                 value={productData.uses}
@@ -254,7 +254,6 @@ const ModalProduct = (props) => {
                                 className={validInput.listProductId ? 'form-select' : 'form-select is-invalid'}
                                 aria-label=""
                                 onChange={(event) => handleOnchangeInput(event.target.value, 'listProductId')}
-                                disabled={action === 'CREATE' ? false : true}
                                 value={productData.listProductId}
                             >
                                 <option defaultValue value=''>Open this select menu</option>
@@ -282,7 +281,7 @@ const ModalProduct = (props) => {
                                 </div>
                                 <div className='col-1 check-image'>
                                     <img
-                                        src={previewImage}
+                                        src={action === 'UPDATE' && previewImage == '' ? productData.img : previewImage}
                                     />
                                 </div>
                             </form>

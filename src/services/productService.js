@@ -4,21 +4,24 @@ const fetAllProduct = (page, limit) => {
     return axios.get(`/api/admin/products/read?page=${page}&limit=${limit}`);
 };
 
-const deleteProduct = (user) => {
-    return axios.delete('/api/admin/products/delete', { data: { id: user.id } });
+const deleteProduct = (product) => {
+    return axios.delete('/api/admin/products/delete', { data: { id: product.id, img: product.img } });
 }
 
 const createProduct = async (data) => {
     return await axios.post('/api/admin/products/create', { ...data }, {
         headers: {
-            Accept: 'application/json',
-            'Content-Type': 'multipart/form-data'
+            "Content-Type": "multipart/form-data"
         }
     });
 }
 
-const updateUser = (userData) => {
-    return axios.put('/api/admin/users/update', { ...userData });
+const updateProduct = (productData) => {
+    return axios.put('/api/admin/products/update', { ...productData }, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    });
 }
 
 
@@ -31,6 +34,6 @@ export {
     deleteProduct,
     createProduct,
 
-    updateUser,
+    updateProduct,
     fetchListProduct,
 };
