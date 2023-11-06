@@ -1,7 +1,9 @@
 import {
     Switch,
-    Route
+    Route,
+    useHistory
 } from "react-router-dom";
+import { useContext } from 'react';
 import Login from '../components/Login/Login';
 import Register from '../components/Register/Register';
 import LoginAdmin from '../components/Admin/LoginAdmin/LoginAdmin';
@@ -15,6 +17,7 @@ import ListProduct from "../components/Customer/ListProduct";
 import Cart from "../components/Customer/Cart";
 
 const AppRoute = (props) => {
+
     return (
         <>
             <Switch>
@@ -33,9 +36,10 @@ const AppRoute = (props) => {
                 <Route path="/contact">
                     Contact
                 </Route>
-                <Route path="/shoppingCart">
+                <Route Route path="/shoppingCart">
                     <Cart />
                 </Route>
+
                 <Route path="/login" exact>
                     <Login />
                 </Route>

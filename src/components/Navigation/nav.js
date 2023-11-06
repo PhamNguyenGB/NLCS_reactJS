@@ -2,9 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import './nav.scss'
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { fetchListProduct } from '../../services/productService';
+import { logoutUser } from '../../services/userService';
+import { UserContext } from '../../context/adminContext';
 
 const Nav = (props) => {
     const [isShow, setIsShow] = useState(true);
+    const { user, logoutContext } = useContext(UserContext);
 
     let location = useLocation();
     let path = ['/admin', '/admin/users', '/admin/products'];
@@ -46,6 +49,16 @@ const Nav = (props) => {
     //     history.push(`/product/${data.categoryName}/${data.id}`);
     // };
 
+    const handleLogout = async () => {
+        let data = await logoutUser();
+        logoutContext();
+
+        if (data && +data.EC === 0) {
+            history.push('/');
+        } else {
+            alert('Cannot log out');
+        }
+    };
 
     return (
         <>
@@ -65,10 +78,25 @@ const Nav = (props) => {
                                         <i className="shopping-icon fa fas fa-shopping-cart"></i>
                                         <span className='shopping-cart'>Giỏ hàng</span>
                                     </div>
-                                    <div className='login-register'>
-                                        <NavLink to="/login" exact className=' login'>Đăng nhập</NavLink>
-                                        <NavLink to="/register" exact className='register'>Đăng ký</NavLink>
-                                    </div>
+                                    {user && user.isAuthenticated === true ?
+                                        <>
+                                            <div className='welcome-user dropdown-toggle' role="button" data-bs-toggle="dropdown">
+                                                {user.account.username}
+                                            </div>
+                                            <ul className="dropdown-menu dropdown-logout">
+                                                <li>Đăng xuất</li>
+                                            </ul>
+                                        </>
+                                        :
+                                        <div className='login-register'>
+                                            <NavLink to="/login" exact className=' login'>Đăng nhập</NavLink>
+                                            <NavLink to="/register" exact className='register'>Đăng ký</NavLink>
+                                        </div>
+
+
+
+                                    }
+
                                 </div>
 
 

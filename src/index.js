@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import '../node_modules/font-awesome/css/font-awesome.min.css';
-import { UserProvider } from './context/userContext';
+import { UserProvider } from './context/adminContext';
 ReactDOM.render(
   <React.StrictMode>
     <UserProvider>

@@ -29,7 +29,7 @@ const Footer = (props) => {
                         </div>
                         <div className='col-3 box-footer'>
                             <h5 className='text-center'>Tổng đài CSKH</h5>
-                            <NavLink to="/">Hỗ trợ đặt hàng và khiếu nại 18006821</NavLink>
+                            <NavLink to="/">Hỗ trợ đặt hàng và khiếu nại 0889946303</NavLink>
                             <div></div>
                             <div></div>
                             <div></div>

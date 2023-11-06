@@ -4,6 +4,7 @@ import ReactPaginate from "react-paginate";
 import { toast } from "react-toastify";
 import ModalDeleteProduct from "./ModalDeleteProduct";
 import ModalProduct from "./ModalProduct";
+import ModalAddListProduct from "./ModalAddListProduct";
 import './Products.scss';
 import numeral from 'numeral';
 
@@ -20,6 +21,7 @@ const Products = (props) => {
 
     // modal update/ create user
     const [isShowModalUser, setIsShowModalUser] = useState(false);
+    const [isShowModalAddListProduct, setIsShowModalAddListProduct] = useState(false);
     const [actionModalUser, setActionModalUser] = useState("CREATE");
     const [dataModelProduct, setDataModelProduct] = useState({});
 
@@ -29,7 +31,6 @@ const Products = (props) => {
 
     const fetchProducts = async () => {
         let response = await fetAllProduct(currentPage, currentLimit);
-        console.log("check res:", response);
         if (response && response.EC === 0) {
             setTotalPages(response.DT.totalPages);
             setListProducts(response.DT.products);
@@ -63,12 +64,12 @@ const Products = (props) => {
 
     const onHideModalProduct = async () => {
         setIsShowModalUser(false);
+        setIsShowModalAddListProduct(false);
         setDataModelProduct({});
         await fetchProducts();
     };
 
     const handleUpdateProduct = (product) => {
-        console.log(product);
         setActionModalUser("UPDATE");
         setDataModelProduct(product);
         console.log(dataModelProduct);
@@ -88,7 +89,7 @@ const Products = (props) => {
                     </div>
                     <div className="actions m-3">
                         <button
-                            className="btn btn-primary"
+                            className="btn btn-primary m-1"
                             onClick={() => {
                                 setIsShowModalUser(true);
                                 setActionModalUser("CREATE");
@@ -96,6 +97,15 @@ const Products = (props) => {
                         >
                             <i className="fa fas fa-plus m-1"></i>
                             Add new product
+                        </button>
+                        <button
+                            className="btn btn-primary m-1"
+                            onClick={() => {
+                                setIsShowModalAddListProduct(true);
+                            }}
+                        >
+                            <i className="fa fas fa-plus m-1"></i>
+                            Add new list product
                         </button>
                     </div>
                 </div>
@@ -185,6 +195,11 @@ const Products = (props) => {
                 isShowModalUser={isShowModalUser}
                 onHide={onHideModalProduct}
                 action={actionModalUser}
+                dataModelProduct={dataModelProduct}
+            />
+            <ModalAddListProduct
+                isShowModalAddListProduct={isShowModalAddListProduct}
+                onHide={onHideModalProduct}
                 dataModelProduct={dataModelProduct}
             />
         </>

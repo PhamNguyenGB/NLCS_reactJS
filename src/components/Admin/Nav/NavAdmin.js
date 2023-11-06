@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import './NavAdmin.scss'
+import './NavAdmin.scss';
 import { NavLink, useLocation, useHistory } from 'react-router-dom';
-import { UserContext } from '../../../context/userContext';
-import { logoutUser } from '../../../services/userService'
+import { UserContext } from '../../../context/adminContext';
+import { logoutUser } from '../../../services/userService';
 
 const NavAdmin = (props) => {
     const { user, logoutContext } = useContext(UserContext);

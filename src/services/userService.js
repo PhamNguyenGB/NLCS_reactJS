@@ -38,6 +38,10 @@ const getUserAccount = () => {
     return axios.get('/api/account');
 }
 
+const getCustomerAccount = () => {
+    return axios.get('/api/account/customer');
+}
+
 const logoutUser = () => {
     return axios.post('/api/logout');
 };
@@ -50,6 +54,7 @@ export {
     createUser,
     updateUser,
     getUserAccount,
+    getCustomerAccount,
     logoutUser,
 
     loginUserAdmin,

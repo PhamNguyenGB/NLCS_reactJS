@@ -3,7 +3,7 @@ import './LoginAdmin.scss'
 import { NavLink, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { loginUserAdmin } from '../../../services/userService';
-import { UserContext } from '../../../context/userContext';
+import { UserContext } from '../../../context/adminContext';
 
 const LoginAdmin = (props) => {
     const { loginContext } = useContext(UserContext);

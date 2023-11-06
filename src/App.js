@@ -6,7 +6,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import AppRoute from './routes/AppRoute';
 import NavAdmin from './components/Admin/Nav/NavAdmin';
 import { Oval } from 'react-loader-spinner';
-import { UserContext } from './context/userContext';
+import { UserContext } from './context/adminContext';
 import Footer from './components/Navigation/footer';
 import {
   BrowserRouter as Router,
@@ -17,6 +17,7 @@ import {
 
 function App() {
   const { user } = useContext(UserContext);
+
   return (
     <Router>
       {user && user.isLoading ?

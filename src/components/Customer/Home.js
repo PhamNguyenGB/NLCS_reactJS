@@ -1,15 +1,20 @@
 import './Home.scss';
-import { useEffect, useState } from "react";
-import { fetAllProduct } from '../../services/productService';
+import { useEffect, useState, useContext } from "react";
+import { fetAllProductHomePage } from '../../services/productService';
 import ReactPaginate from "react-paginate";
 import { NavLink, useHistory } from 'react-router-dom';
 import numeral from 'numeral';
+import { toast } from 'react-toastify';
+import { UserContext } from '../../context/adminContext';
+import { addCart, updateCart, checkOrder } from '../../services/customerService'
 
 const Home = (props) => {
     const [listProducts, setListProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentLimit, setCurrentLimit] = useState(15);
     const [totalPages, setTotalPages] = useState(0);
+
+    const { user } = useContext(UserContext);
 
     let history = useHistory();
 
@@ -18,7 +23,7 @@ const Home = (props) => {
     }, [currentPage]);
 
     const fetchProducts = async () => {
-        let response = await fetAllProduct(currentPage, currentLimit);
+        let response = await fetAllProductHomePage(currentPage, currentLimit);
         if (response && response.EC === 0) {
             setTotalPages(response.DT.totalPages);
             setListProducts(response.DT.products);
@@ -33,8 +38,21 @@ const Home = (props) => {
         history.push(`/product/${data.name}/${data.id}`);
     };
 
-    const handleOnclickBuy = (data) => {
-        console.log(data);
+    const checkUserClickBuy = async (dataUser) => {
+        let check = await checkOrder(dataUser);
+        if (check && check.EC === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    const handleOnclickBuy = async (data) => {
+        let clickBuy = await checkUserClickBuy(user);
+        let response = clickBuy === true ? await addCart(user, data, 1) : await updateCart(user, data, 1);
+        if (response && response.EC === 0) {
+            toast.success(response.EM);
+        }
     };
 
     const formatCash = (price) => {
@@ -96,7 +114,7 @@ const Home = (props) => {
                                         <div className="card-body mt-5">
                                             <h6 className="card-title card-title-product" role='button' onClick={() => handleOnclick(item)}>{item.name}</h6>
                                             <h4 className="card-text mt-5 text-primary" role='button' onClick={() => handleOnclick(item)}>{formatCash(item.price)} vnđ</h4>
-                                            <a href="/shoppingCart" className="btn btn-primary mt-3 add-cart" onClick={() => handleOnclickBuy(item)}>Thêm vào giỏ hàng</a>
+                                            <span className="btn btn-primary mt-3 add-cart" onClick={() => handleOnclickBuy(item)}>Thêm vào giỏ hàng</span>
                                         </div>
                                     </div>
                                 )

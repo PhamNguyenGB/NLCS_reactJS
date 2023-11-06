@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
-import { createUser, updateUser } from '../../../../services/userService';
 import { createProduct, updateProduct } from '../../../../services/productService';
 import { fetchListProduct } from '../../../../services/productService';
 import './Products.scss';
@@ -12,14 +11,11 @@ import './Products.scss';
 const ModalProduct = (props) => {
 
     const { action, dataModelProduct } = props;
-
-    console.log('Modal Product', dataModelProduct);
-
     const [listProduct, setListProducts] = useState([]);
 
     useEffect(() => {
         getListProduct();
-    }, []);
+    }, [listProduct]);
 
     const getListProduct = async () => {
         let response = await fetchListProduct();
@@ -65,7 +61,7 @@ const ModalProduct = (props) => {
     const [previewImage, setPreviewImage] = useState('');
     const [getFile, setGetFile] = useState('');
 
-    let history = useHistory();
+    // let history = useHistory();
 
     const handleOnchangeInput = (value, name) => {
         let _productData = _.cloneDeep(productData);

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useHistory } from "react-router-dom";
 
 // Set config defaults when creating the instance
 const instance = axios.create({
@@ -28,6 +29,8 @@ instance.interceptors.response.use(function (response) {
 }, function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
+    const history = useHistory();
+
     const status = error && error.response && error.response.status || 500;
     switch (status) {
         // authentication (token related issues)

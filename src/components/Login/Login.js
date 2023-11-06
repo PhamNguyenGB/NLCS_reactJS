@@ -3,7 +3,8 @@ import './Login.scss'
 import { NavLink, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { loginUser } from '../../services/userService';
-import { UserContext } from '../../context/userContext';
+import { UserContext } from '../../context/adminContext';
+import Home from '../Customer/Home';
 
 const Login = (props) => {
     const { loginContext } = useContext(UserContext);
@@ -37,10 +38,11 @@ const Login = (props) => {
             let phone = serverData.DT.phone;
             let address = serverData.DT.address;
             let token = serverData.DT.access_token;
+            let id = serverData.DT.id === undefined ? '' : serverData.DT.id;
             let data = {
                 isAuthenticated: true,
                 token,
-                account: { username, email, phone, address }
+                account: { username, email, phone, address, id }
             }
             loginContext(data);
 

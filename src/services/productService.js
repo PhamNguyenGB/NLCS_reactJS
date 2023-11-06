@@ -4,6 +4,10 @@ const fetAllProduct = (page, limit) => {
     return axios.get(`/api/admin/products/read?page=${page}&limit=${limit}`);
 };
 
+const fetAllProductHomePage = (page, limit) => {
+    return axios.get(`/api/products/read?page=${page}&limit=${limit}`);
+};
+
 const deleteProduct = (product) => {
     return axios.delete('/api/admin/products/delete', { data: { id: product.id, img: product.img } });
 }
@@ -29,11 +33,17 @@ const fetchListProduct = () => {
     return axios.get('/api/admin/products/listProduct');
 };
 
+const addListProduct = async (data) => {
+    return await axios.post('/api/admin/products/listProduct/create', { ...data });
+};
+
 export {
     fetAllProduct,
+    fetAllProductHomePage,
     deleteProduct,
     createProduct,
 
     updateProduct,
     fetchListProduct,
+    addListProduct,
 };

@@ -46,9 +46,10 @@ const UserProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        if (window.location.pathname !== '/admin/users' && window.location.pathname !== '/admin/products' && window.location.pathname !== '/admin/listProducts' && window.location.pathname !== '/shoppingCart') {
+        if (window.location.pathname !== '/admin/users' && window.location.pathname !== '/admin/products' && window.location.pathname !== '/admin/listProducts') {
             setUser({ ...user, isLoading: false });
-        } else {
+        }
+        else {
             fetchUser();
         }
     }, [])
