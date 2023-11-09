@@ -3,13 +3,14 @@ import { useParams } from "react-router-dom";
 import { detailProduct } from '../../services/customerService';
 import './DetailProduct.scss';
 import numeral from 'numeral';
-
+import { useCart } from 'react-use-cart';
 const DetailProduct = (props) => {
 
     const [quantity, setQuantity] = useState(1);
 
     const { name, id } = useParams();
     const [product, setProduct] = useState([]);
+    const { addItem } = useCart();
 
     const fetchProducts = async () => {
         let response = await detailProduct(name, id);
@@ -41,6 +42,10 @@ const DetailProduct = (props) => {
         console.log(event);
     };
 
+    const handleClickBuy = (product) => {
+        addItem(product, quantity);
+    };
+
 
     return (
         <>
@@ -57,7 +62,7 @@ const DetailProduct = (props) => {
                                 <input type="number" className="number" value={quantity} onChange={(event) => handleOnChangeInput(event)} />
                                 <div className="value-button increase" onClick={() => handleOnclickIncrease()}><span>+</span></div>
                             </form>
-                            <div className="col-4 buy mt-3">
+                            <div className="col-4 buy mt-3" onClick={() => handleClickBuy(product)}>
                                 CHỌN MUA
                             </div>
                             <div className="commit row mt-5">

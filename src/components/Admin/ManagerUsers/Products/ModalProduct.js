@@ -8,6 +8,7 @@ import { createProduct, updateProduct } from '../../../../services/productServic
 import { fetchListProduct } from '../../../../services/productService';
 import './Products.scss';
 
+
 const ModalProduct = (props) => {
 
     const { action, dataModelProduct } = props;
@@ -15,7 +16,7 @@ const ModalProduct = (props) => {
 
     useEffect(() => {
         getListProduct();
-    }, [listProduct]);
+    }, [dataModelProduct]);
 
     const getListProduct = async () => {
         let response = await fetchListProduct();

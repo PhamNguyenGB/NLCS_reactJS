@@ -1,16 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
-import './nav.scss'
+import './nav.scss';
 import { NavLink, useHistory, useLocation } from 'react-router-dom';
 import { fetchListProduct } from '../../services/productService';
 import { logoutUser } from '../../services/userService';
 import { UserContext } from '../../context/adminContext';
+import { useCart } from "react-use-cart";
 
 const Nav = (props) => {
     const [isShow, setIsShow] = useState(true);
     const { user, logoutContext } = useContext(UserContext);
 
+    const {
+        totalItems,
+    } = useCart();
+
     let location = useLocation();
-    let path = ['/admin', '/admin/users', '/admin/products'];
+    let path = ['/admin', '/admin/users', '/admin/products', '/admin/order'];
     useEffect(() => {
         for (let i = 0; i < path.length; i++) {
             if (location.pathname === path[i]) {
@@ -60,6 +65,10 @@ const Nav = (props) => {
         }
     };
 
+    const handleMyOrder = async () => {
+        history.push('/myOrder');
+    };
+
     return (
         <>
             {isShow === true &&
@@ -75,7 +84,13 @@ const Nav = (props) => {
                                         <i className="fa fas fa-search search-icon"></i>
                                     </div>
                                     <div className='cart' onClick={() => handleClickShoppingCarrt()}>
-                                        <i className="shopping-icon fa fas fa-shopping-cart"></i>
+                                        <i className="shopping-icon fa fas fa-shopping-cart position-relative">
+                                            {totalItems !== 0 && (
+                                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                    {totalItems}
+                                                </span>
+                                            )}
+                                        </i>
                                         <span className='shopping-cart'>Giỏ hàng</span>
                                     </div>
                                     {user && user.isAuthenticated === true ?
@@ -84,7 +99,9 @@ const Nav = (props) => {
                                                 {user.account.username}
                                             </div>
                                             <ul className="dropdown-menu dropdown-logout">
-                                                <li>Đăng xuất</li>
+                                                <li role='button' onClick={() => handleMyOrder()}>Đơn hàng của tôi</li>
+                                                <hr />
+                                                <li role='button' onClick={() => handleLogout()}>Đăng xuất</li>
                                             </ul>
                                         </>
                                         :

@@ -70,7 +70,7 @@ const Products = (props) => {
     };
 
     const handleUpdateProduct = (product) => {
-        setActionModalUser("UPDATE");
+        console.log(product);
         setDataModelProduct(product);
         console.log(dataModelProduct);
         setIsShowModalUser(true);

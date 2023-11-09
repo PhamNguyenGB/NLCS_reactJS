@@ -15,18 +15,15 @@ import DetailProduct from "../components/Customer/DetailProduct";
 import About from "../components/Customer/About";
 import ListProduct from "../components/Customer/ListProduct";
 import Cart from "../components/Customer/Cart";
-
+import { CartProvider } from "react-use-cart";
+import Order from "../components/Admin/ManagerUsers/Orders/Order";
+import MyOrder from "../components/Customer/MyOrder";
+import MyDetail from "../components/Customer/MyDetail";
 const AppRoute = (props) => {
 
     return (
         <>
             <Switch>
-                <Route path="/product/:name/:id" exact>
-                    <DetailProduct />
-                </Route>
-                <Route path="/listProduct/:categoryName" exact>
-                    <ListProduct />
-                </Route>
                 <Route path="/about">
                     <About />
                 </Route>
@@ -36,26 +33,39 @@ const AppRoute = (props) => {
                 <Route path="/contact">
                     Contact
                 </Route>
-                <Route Route path="/shoppingCart">
-                    <Cart />
-                </Route>
-
-                <Route path="/login" exact>
+                <Route path="/login">
                     <Login />
                 </Route>
-                <Route path="/register" exact>
+                <Route path="/register">
                     <Register />
                 </Route>
-
+                <Route path="/myOrder">
+                    <MyOrder />
+                </Route>
+                <Route path="/myOrder/myDetail" exact>
+                    <MyDetail />
+                </Route>
                 <Route path="/admin" exact>
                     <LoginAdmin />
                 </Route>
                 <PrivateRoute path="/admin/users" component={Users} />
                 <PrivateRoute path="/admin/products" component={Products} />
+                <PrivateRoute path="/admin/order" component={Order} />
+                <CartProvider>
+                    <Route path="/product/:name/:id" exact>
+                        <DetailProduct />
+                    </Route>
+                    <Route path="/listProduct/:categoryName" exact>
+                        <ListProduct />
+                    </Route>
+                    <Route Route path="/shoppingCart">
+                        <Cart />
+                    </Route>
+                    <Route path="/" exact>
+                        <Home />
+                    </Route>
+                </CartProvider>
 
-                <Route path="/" exact>
-                    <Home />
-                </Route>
                 <Route path="*">
                     404 not found
                 </Route>

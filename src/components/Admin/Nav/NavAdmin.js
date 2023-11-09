@@ -10,7 +10,7 @@ const NavAdmin = (props) => {
     const history = useHistory();
 
     let location = useLocation();
-    let path = ['/admin/users', '/admin/products'];
+    let path = ['/admin/users', '/admin/products', '/admin/order'];
 
     useEffect(() => {
         for (let i = 0; i < path.length; i++) {

@@ -68,7 +68,7 @@ const Login = (props) => {
                         <h1>Đăng nhập</h1>
 
                         <div className='content col-10 col-sm-7 d-flex flex-column gap-3 py-3'>
-                            <label><b>Tên đăng nhập</b></label>
+                            <label><b className='text-white'>Tên đăng nhập:</b></label>
                             <input
                                 type='text'
                                 className={objCheckInput.isValidUsername ? 'form-control' : 'form-control is-invalid'}
@@ -76,7 +76,7 @@ const Login = (props) => {
                                 value={username}
                                 onChange={(event) => { setUsername(event.target.value) }}
                             />
-                            <label><b>Mật khẩu:</b></label>
+                            <label><b className='text-white'>Mật khẩu:</b></label>
                             <input
                                 type='password'
                                 className={objCheckInput.isValidPassword ? 'form-control' : 'form-control is-invalid'}
@@ -86,7 +86,7 @@ const Login = (props) => {
                                 onKeyDown={(event) => handlePressEnter(event)}
                             />
                             <button className='btn btn-secondary' onClick={() => handleLogin()}>Đăng nhập</button>
-                            <span className='text-center'>Chưa có tài khoản?<NavLink to='/register'>Đăng ký ngay.</NavLink></span>
+                            <span className='text-center text-white'>Chưa có tài khoản?<NavLink to='/register'>Đăng ký ngay.</NavLink></span>
                         </div>
 
                     </div>

@@ -8,6 +8,7 @@ import NavAdmin from './components/Admin/Nav/NavAdmin';
 import { Oval } from 'react-loader-spinner';
 import { UserContext } from './context/adminContext';
 import Footer from './components/Navigation/footer';
+import { CartProvider } from "react-use-cart";
 import {
   BrowserRouter as Router,
   Switch,
@@ -40,7 +41,9 @@ function App() {
         :
         <>
           <div className='app-header'>
-            <Nav />
+            <CartProvider>
+              <Nav />
+            </CartProvider>
             <NavAdmin />
           </div>
           <div className='App-container'>

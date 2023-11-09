@@ -4,6 +4,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import numeral from 'numeral';
+import { useCart } from 'react-use-cart';
 
 const ListProduct = (props) => {
     const [listProduct, setListProduct] = useState([]);
@@ -12,6 +13,7 @@ const ListProduct = (props) => {
     const [totalPages, setTotalPages] = useState(0);
 
     const { categoryName } = useParams();
+    const { addItem } = useCart();
 
     let history = useHistory();
 
@@ -55,18 +57,18 @@ const ListProduct = (props) => {
                                         <div className="card-body mt-5">
                                             <h6 className="card-title card-title-product" role='button' onClick={() => handleOnclick(item)}>{item.name}</h6>
                                             <h4 className="card-text mt-5 text-primary" role='button' onClick={() => handleOnclick(item)}>{formatCash(item.price)} vnđ</h4>
-                                            <a
-                                                href="#"
+                                            <span
                                                 className="btn btn-primary mt-3"
-                                                onClick={() => handleOnclick(item)}
+                                                onClick={() => addItem(item)}
                                                 style={{
                                                     padding: '10px 51px',
                                                     backgroundColor: '#5dac46',
                                                     border: '1px solid #5dac46',
                                                 }}
+
                                             >
                                                 Thêm vào giỏ hàng
-                                            </a>
+                                            </span>
                                         </div>
                                     </div>
                                 )

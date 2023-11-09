@@ -82,6 +82,10 @@ body {
                     font-size: 20px;
                     margin: 0 10px;
                     color: #fff;
+
+                    span {
+                        font-size: 12px;
+                    }
                 }
 
                 .shopping-cart {
@@ -102,7 +106,12 @@ body {
                 font-weight: 500;
             }
 
-            .dropdown-logout {}
+            .dropdown-logout {
+                text-align: center;
+                left: 1460px;
+                top: 60px;
+
+            }
 
             .login-register {
 

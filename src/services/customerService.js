@@ -16,17 +16,29 @@ const getOrderDetail = () => {
     return axios.get(`/api/shoppingCart`);
 }
 
-const addCart = (dataUser, dataProduct, quantity) => {
-    return axios.post(`/api/products/addCart`, { ...dataUser, ...dataProduct, quantity });
+const addCart = (dataUser, dataProduct, quantity, cartTotal) => {
+    return axios.post(`/api/products/addCart`, { ...dataUser, ...dataProduct, quantity, cartTotal });
 }
 
-const updateCart = (dataUser, dataProduct, quantity) => {
-    return axios.put(`/api/products/addCart`, { ...dataUser, ...dataProduct, quantity });
-}
+// const updateCart = (dataUser, dataProduct, quantity) => {
+//     return axios.put(`/api/products/addCart`, { ...dataUser, ...dataProduct, quantity });
+// }
 
 const checkOrder = (dataUser) => {
     return axios.post(`/api/checkOrder`, { ...dataUser });
 }
+
+const addOrderDetail = (dataProduct) => {
+    return axios.post(`/api/products/orderDetail`, dataProduct);
+}
+
+const fetchAllMyOrders = (page, limit) => {
+    return axios.get(`/api/myOrder?page=${page}&limit=${limit}`);
+}
+
+const fetchAllMyOrderDetail = (id) => {
+    return axios.post(`/api/myOrder/${id}`);
+};
 
 
 // const updateUser = (userData) => {
@@ -47,6 +59,8 @@ export {
     getListProduct,
     getOrderDetail,
     addCart,
-    updateCart,
     checkOrder,
+    addOrderDetail,
+    fetchAllMyOrders,
+    fetchAllMyOrderDetail,
 };

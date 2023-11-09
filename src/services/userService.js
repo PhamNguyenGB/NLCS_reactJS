@@ -46,6 +46,14 @@ const logoutUser = () => {
     return axios.post('/api/logout');
 };
 
+const fetAllOrder = (page, limit) => {
+    return axios.get(`/api/admin/order/read?page=${page}&limit=${limit}`);
+};
+
+const fetAllOrderDetail = (data) => {
+    return axios.post(`/api/admin/order/detail`, { data });
+};
+
 export {
     registerNewuser,
     loginUser,
@@ -56,6 +64,8 @@ export {
     getUserAccount,
     getCustomerAccount,
     logoutUser,
+    fetAllOrder,
+    fetAllOrderDetail,
 
     loginUserAdmin,
 };

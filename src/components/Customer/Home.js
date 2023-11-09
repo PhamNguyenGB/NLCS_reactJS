@@ -6,7 +6,8 @@ import { NavLink, useHistory } from 'react-router-dom';
 import numeral from 'numeral';
 import { toast } from 'react-toastify';
 import { UserContext } from '../../context/adminContext';
-import { addCart, updateCart, checkOrder } from '../../services/customerService'
+import { addCart, updateCart, checkOrder, addOrderDetail } from '../../services/customerService';
+import { useCart } from 'react-use-cart';
 
 const Home = (props) => {
     const [listProducts, setListProducts] = useState([]);
@@ -15,6 +16,7 @@ const Home = (props) => {
     const [totalPages, setTotalPages] = useState(0);
 
     const { user } = useContext(UserContext);
+    const { addItem } = useCart();
 
     let history = useHistory();
 
@@ -38,22 +40,23 @@ const Home = (props) => {
         history.push(`/product/${data.name}/${data.id}`);
     };
 
-    const checkUserClickBuy = async (dataUser) => {
-        let check = await checkOrder(dataUser);
-        if (check && check.EC === 0) {
-            return true;
-        } else {
-            return false;
-        }
-    };
+    // const checkUserClickBuy = async (dataUser) => {
+    //     let check = await checkOrder(dataUser);
+    //     if (check && check.EC === 0) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // };
 
-    const handleOnclickBuy = async (data) => {
-        let clickBuy = await checkUserClickBuy(user);
-        let response = clickBuy === true ? await addCart(user, data, 1) : await updateCart(user, data, 1);
-        if (response && response.EC === 0) {
-            toast.success(response.EM);
-        }
-    };
+    // const handleOnclickBuy = async (data) => {
+    //     let clickBuy = await checkUserClickBuy(user);
+    //     let response = clickBuy === true ? await addCart(user, data, 1) : await updateCart(user, data, 1);
+    //     if (response && response.EC === 0) {
+    //         toast.success(response.EM);
+    //     }
+    //     await addOrderDetail(user, data, 1);
+    // };
 
     const formatCash = (price) => {
         return numeral(price).format('0,0');
@@ -114,7 +117,7 @@ const Home = (props) => {
                                         <div className="card-body mt-5">
                                             <h6 className="card-title card-title-product" role='button' onClick={() => handleOnclick(item)}>{item.name}</h6>
                                             <h4 className="card-text mt-5 text-primary" role='button' onClick={() => handleOnclick(item)}>{formatCash(item.price)} vnđ</h4>
-                                            <span className="btn btn-primary mt-3 add-cart" onClick={() => handleOnclickBuy(item)}>Thêm vào giỏ hàng</span>
+                                            <span className="btn btn-primary mt-3 add-cart" onClick={() => addItem(item)}>Thêm vào giỏ hàng</span>
                                         </div>
                                     </div>
                                 )

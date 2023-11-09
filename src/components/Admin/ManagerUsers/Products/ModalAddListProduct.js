@@ -17,6 +17,7 @@ const ModalAddListProduct = (props) => {
 
     const getListProduct = async () => {
         let response = await fetchListProduct();
+        console.log(response);
         if (response && +response.EC === 0) {
             setListProducts(response.DT);
         } else {
