@@ -12,7 +12,7 @@ import { useCart } from 'react-use-cart';
 const Home = (props) => {
     const [listProducts, setListProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [currentLimit, setCurrentLimit] = useState(15);
+    const [currentLimit, setCurrentLimit] = useState(12);
     const [totalPages, setTotalPages] = useState(0);
 
     const { user } = useContext(UserContext);
