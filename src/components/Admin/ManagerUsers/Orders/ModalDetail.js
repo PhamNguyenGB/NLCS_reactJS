@@ -49,6 +49,7 @@ const ModalUser = (props) => {
                             <tbody>
                                 {dataModelUser && isShowModalUser === true ?
                                     <>
+                                        {console.log(dataModelUser)}
                                         {dataModelUser.DT.map((item, index) => {
                                             return (
                                                 <tr key={`row-${index}`}>

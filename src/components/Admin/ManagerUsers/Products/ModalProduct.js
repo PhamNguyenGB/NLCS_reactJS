@@ -108,10 +108,10 @@ const ModalProduct = (props) => {
     };
 
     const handleCloseModalUser = () => {
-        props.onHide();
         setProductData(defaultProductData);
         setValidInput(validInputDefault);
         setPreviewImage('');
+        props.onHide();
     };
 
     // const getBase64 = async (file) => {

@@ -50,10 +50,10 @@ const MyOrder = (props) => {
     return (
         <>
             <div className='container position-relative'>
-                {!isEmpty(getMyOrders) && getMyOrders.DT.users.length > 0 ?
+                {!isEmpty(getMyOrders.DT) && getMyOrders.DT.length > 0 ?
                     <>
                         {
-                            getMyOrders.DT.users.map((item, index) => {
+                            getMyOrders.DT.map((item, index) => {
                                 return (
                                     <section className=" gradient-custom-2" key={index}>
                                         <div className="container py-3 ">
